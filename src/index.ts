@@ -16,7 +16,7 @@ server.on("request", (req, res) => {
 	logRequest(req.method ?? "", req.url ?? "");
 	requestCount++;
 
-    // Handle GET request to /status
+	// Handle GET request to /status
 	if (req.method === "GET" && req.url === "/status") {
 		res.statusCode = 200;
 		res.setHeader("Content-Type", "application/json");
@@ -28,7 +28,7 @@ server.on("request", (req, res) => {
 		return;
 	}
 
-    // Handle POST request to /data
+	// Handle POST request to /data
 	if (req.method === "POST" && req.url === "/data") {
 		let data = "";
 		req.on("data", (chunk) => (data += chunk));
@@ -51,10 +51,10 @@ server.on("request", (req, res) => {
 		});
 	}
 
-    // Serve static files and handle 404
-    let filePath = path.resolve(
+	// Serve static files and handle 404
+	let filePath = path.resolve(
 		__dirname,
-		`../public/${req.url ?? "index.html"}`
+		`../public/${req.url == "/" ? "index.html" : req.url}`
 	);
 
 	fs.readFile(filePath, (err, data) => {
